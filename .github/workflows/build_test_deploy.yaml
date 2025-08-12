@@ -29,14 +29,17 @@ jobs:
 
           - name: Run Flake8
             run: |
+                source antenv/bin/activate
                 flake8 src
           
           - name: Run Black Formatter
             run: |
+                source antenv/bin/activate
                 black src --check
           
           - name: Run isort
-            run: | 
+            run: |
+                source antenv/bin/activate
                 isort src --check-only
 
           - name: Run Unit and Functional Tests
