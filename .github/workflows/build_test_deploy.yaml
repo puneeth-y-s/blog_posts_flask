@@ -39,6 +39,7 @@ jobs:
                 python3 -m pytest tests/unit
 
     deploy:
+        needs: build_and_test
         runs-on: ubuntu-latest
         steps:
           - name: Checkout Stock Portfolio Repo
