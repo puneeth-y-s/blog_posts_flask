@@ -1,0 +1,67 @@
+name: "Deploy, Test, Deploy App"
+
+on: 
+    workflow_dispatch:
+    push:
+
+permissions:
+    id-token: write # required for the az login
+    contents: read # required for checkout
+
+jobs:
+    build_and_test:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Stock Portfolio Repo
+            uses: actions/checkout@v4
+
+          - name: Setup Python
+            id: setup_python
+            uses: actions/setup-python@v5
+            with:
+                python-version: '3.12'
+
+          - name: Install Dependencies
+            run: |
+                python3 -m venv antenv
+                source antenv/bin/activate
+                pip3 install -r requirements.txt
+
+          - name: Run Unit and Functional Tests
+            run: |
+                source antenv/bin/activate
+                python3 -m pytest tests/unit
+
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Stock Portfolio Repo
+            uses: actions/checkout@v4
+
+          - name: Setup Python 3.11
+            uses: actions/setup-python@v5
+            with:
+                python-version: '3.12'
+
+          - name: Azure login
+            uses: azure/login@v2
+            with:
+              client-id: ${{ secrets.AZURE_CLIENT_ID }}
+              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+          - name: Install dependencies
+            run: |
+                python3 -m venv antenv
+                source antenv/bin/activate
+                pip3 install -r requirements.txt
+
+          - name: Prepare Deployment Package
+            run: |
+                zip -r --quiet Application.zip .
+
+          - name: Deploy app
+            uses: azure/webapps-deploy@v3
+            with:
+              app-name: blog-posts
+              package: ${{ github.workspace }}/Application.zip

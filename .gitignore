@@ -1,0 +1,64 @@
+# =========================================
+# Python Bytecode & Cache
+# =========================================
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.cpython-*
+
+# =========================================
+# Environment & Dependencies
+# =========================================
+.env
+.venv
+env/
+venv/
+ENV/
+Pipfile.lock
+poetry.lock
+
+# =========================================
+# IDE & Editor files
+# =========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================================
+# OS generated files
+# =========================================
+.DS_Store
+Thumbs.db
+
+# =========================================
+# Testing & Coverage
+# =========================================
+.pytest_cache/         # Pytest cache (includes conftest caching)
+.cache/                # Sometimes pytest plugins store here
+.coverage
+coverage.xml
+htmlcov/
+
+# =========================================
+# Flask Instance Folder
+# =========================================
+instance/
+
+# =========================================
+# Alembic Migrations Cache
+# =========================================
+migrations/__pycache__/
+migrations/versions/__pycache__/
+
+# =========================================
+# Logs
+# =========================================
+*.log
+
+# =========================================
+# Local Databases
+# =========================================
+*.db
+*.sqlite
