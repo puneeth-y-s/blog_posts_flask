@@ -1,4 +1,4 @@
-name: "Deploy, Test, Deploy App"
+name: "Deploy, Test, and Deploy to App Service"
 
 on: 
     workflow_dispatch:
