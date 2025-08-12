@@ -1,9 +1,12 @@
+import os
+
 from flask import Flask
 from flask_restx import Api
+
 from src.api.db import init_db
 from src.api.posts.views import ns as posts_namespace
 from src.api.users.views import ns as users_namespace
-import os
+
 
 def create_app():
 
@@ -18,7 +21,7 @@ def create_app():
         version="1.0",
         title="Blog APIs",
         description="A simple Blog Post APIs",
-        contact_email="yspuneeth1994@gmail.com"
+        contact_email="yspuneeth1994@gmail.com",
     )
 
     api.add_namespace(posts_namespace, "/posts")

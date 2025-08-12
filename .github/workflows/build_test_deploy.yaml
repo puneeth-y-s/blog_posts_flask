@@ -27,6 +27,12 @@ jobs:
                 source antenv/bin/activate
                 pip3 install -r requirements.txt
 
+          - name: Check Code Quality
+            run:
+                flake8 src
+                black src --check
+                isort src --check-only
+
           - name: Run Unit and Functional Tests
             run: |
                 source antenv/bin/activate

@@ -1,42 +1,33 @@
-from flask_restx import Resource, Namespace, fields
-from flask import request, abort
-from src.api.users.models import User
-from src.api.db import get_db_session
+from flask import abort, request
+from flask_restx import Namespace, Resource, fields
+
 from src.api import repository
+from src.api.users.models import User
 
 ns = Namespace("users")
 
-user_model = ns.model(
-    "User", {
-        "id": fields.Integer,
-        "name": fields.String
-    }
-)
+user_model = ns.model("User", {"id": fields.Integer, "name": fields.String})
 
 user_input_model = ns.model(
-    "User", {
-        "name": fields.String(required=True),
-        "password": fields.String(required=True)
-    }
+    "User",
+    {"name": fields.String(required=True), "password": fields.String(required=True)},
 )
+
 
 @ns.route("/")
 class UserListResource(Resource):
 
     @ns.marshal_list_with(user_model)
     def get(self):
-        with get_db_session() as session:
-            return repository.get_all(User), 200
+        return repository.get_all(User), 200
 
     @ns.marshal_with(user_model)
     @ns.expect(user_input_model)
     def post(self):
         data = request.get_json()
-        user = User(
-            name = data.get("name"),
-            password = data.get("password")
-        )
+        user = User(name=data.get("name"), password=data.get("password"))
         return repository.create(user), 201
+
 
 @ns.route("/<int:id>")
 class UserResource(Resource):
@@ -49,7 +40,7 @@ class UserResource(Resource):
         return user, 200
 
     @ns.marshal_with(user_model)
-    @ns.expect(user_input_model) 
+    @ns.expect(user_input_model)
     def put(self, id):
         data = request.get_json()
         user = repository.update(User, id, data)

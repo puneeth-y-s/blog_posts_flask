@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import Relationship
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from src.api.db import Base
-from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class User(Base):
 
