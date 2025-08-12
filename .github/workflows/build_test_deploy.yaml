@@ -12,7 +12,7 @@ jobs:
     build_and_test:
         runs-on: ubuntu-latest
         steps:
-          - name: Checkout Stock Portfolio Repo
+          - name: Checkout Blog Posts Repo
             uses: actions/checkout@v4
 
           - name: Setup Python
